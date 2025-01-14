@@ -1,19 +1,50 @@
 /* @provengo summon selenium */
 
 /**
- * This story opens a new browser window, goes to google.com, and searches for "Pizza".
+ * This story opens a new browser window, logs into Moodle, navigates to a course, and submits an assignment.
  */
-bthread('Search', function () {
-  let s = new SeleniumSession('search').start(URL)
-  composeQuery(s, { text: 'Pizza' })
-  startSearch(s)
-})
+bthread('Assignment Submission', function () {
+  let session = new SeleniumSession('assignmentSubmission');
+  session.start(URL);
+
+  // Login process
+  enterUsername(session, { username: studentuser });
+  enterPassword(session, { password: password });
+  clickLoginButton(session);
+
+  // Navigate to course and assignment
+  openStudentCourse(session);
+  openStudentAssignment(session);
+
+  // Add submission
+  clickAddSubmission(session);
+
+  // Submit assignment
+  enterSubmissionText(session, { text: submissionText });
+  clickSaveButton(session);
+});
 
 /**
- * This story opens a new browser window, goes to google.com, and searches for "Pasta" using the "I Feel Lucky" feature.
+ * This story opens a new browser window, logs into Moodle as a teacher, navigates to a course, and changes assignment settings to individual submissions.
  */
-bthread('Feeling lucky', function () {
-  let s = new SeleniumSession('lucky').start(URL)
-  composeQuery(s, { text: 'Pasta' })
-  feelLucky(s)
-})
+bthread('Change Assignment to Individual Submissions', function () {
+  let session = new SeleniumSession('assignmentSettings');
+  session.start(URL);
+
+  // Login process
+  enterUsername(session, { username: teacheruser });
+  enterPassword(session, { password: password });
+  clickLoginButton(session);
+
+  // Navigate to course and assignment
+  openTeacherCourse(session);
+  openTeacherAssignment(session);
+
+  // Open assignment settings
+  clickSettingsButton(session);
+
+  // Change group submission settings
+  clickGroupSubmissionSettings(session);
+  setGroupSubmissionToIndividual(session);
+  saveSettings(session);
+});
