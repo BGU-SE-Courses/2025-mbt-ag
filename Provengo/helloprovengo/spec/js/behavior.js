@@ -1,5 +1,6 @@
 /* @provengo summon selenium */
 
+
 /**
  * This story opens a new browser window, logs into Moodle, navigates to a course, and submits an assignment.
  */

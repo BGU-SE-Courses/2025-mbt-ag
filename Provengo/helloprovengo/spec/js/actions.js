@@ -14,6 +14,16 @@
 //   }
 // }
 
+function login(session, data) {
+  sync({ request: Event('start(login)', {'session':{'name':session.name},'data':data})})
+  with(session) {
+    writeText(xpaths.loginWindow.usernameInput, data.username)
+    writeText(xpaths.loginWindow.passwordInput, data.password)
+    click(xpaths.loginWindow.loginButton)
+  }
+  sync({ request: Event('end(login)', {'session':{'name':session.name},'data':data})})
+}
+
 function enterUsername(session, data) {
   session.writeText(xpaths.loginWindow.usernameInput, data.username);
 }
@@ -27,11 +37,12 @@ function clickLoginButton(session) {
 }
 
 function openStudentCourse(session) {
-  session.click(xpaths.studentMainWindow.courseNameButton);
+  session.click(xpaths.studentMainWindow.myCourses);
+  session.click(xpaths.studentCoursesPage.course1);
 }
 
 function openStudentAssignment(session) {
-  session.click(xpaths.courseWindow.assignmentButton);
+  session.click(xpaths.studentCourseWindow.assignmentButton);
 }
 
 function clickAddSubmission(session) {
@@ -48,11 +59,12 @@ function clickSaveButton(session) {
 
 
 function openTeacherCourse(session) {
-  session.click(xpaths.teacherMainWindow.courseNameButton);
+  session.click(xpaths.teacherMainWindow.myCourses);
+  session.click(xpaths.teacherCoursesPage.course1);
 }
 
 function openTeacherAssignment(session) {
-  session.click(xpaths.courseWindow.assignmentButton);
+  session.click(xpaths.teacherCourseWindow.assignmentButton);
 }
 
 function clickSettingsButton(session) {
@@ -75,5 +87,6 @@ function setGroupSubmissionToIndividual(session) {
 }
 
 function saveSettings(session) {
+  session.moveToElement(xpaths.settingsWindow.saveButton);
   session.click(xpaths.settingsWindow.saveButton);
 }
