@@ -43,7 +43,7 @@ const xpaths = {
   },
   settingsWindow: {
     groupSubmissionSettingsButton: '/html/body/div[3]/div[4]/div[1]/div[3]/div[1]/section[1]/div[2]/form[1]/fieldset[6]/div[1]/div[1]/a[1]',
-    groupSubmissionEnabledCheckbox: '/html/body/div[3]/div[4]/div[1]/div[3]/div[1]/section[1]/div[2]/form[1]/fieldset[6]/div[2]/div[1]/div[2]/select[1]',
+    groupSubmissionEnabledCheckbox: "//*[@id='id_teamsubmission']",
     saveButton: "//*[@id='id_submitbutton2']"
   }
 }

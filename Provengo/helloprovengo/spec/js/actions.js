@@ -50,10 +50,12 @@ function clickAddSubmission(session) {
 }
 
 function enterSubmissionText(session, data) {
+  session.moveToElement(xpaths.submissionWindow.submissionInput);
   session.writeText(xpaths.submissionWindow.submissionInput, data.text);
 }
 
 function clickSaveButton(session) {
+  session.moveToElement(xpaths.submissionWindow.saveButton);
   session.click(xpaths.submissionWindow.saveButton);
 }
 
@@ -72,6 +74,7 @@ function clickSettingsButton(session) {
 }
 
 function clickGroupSubmissionSettings(session) {
+  session.moveToElement(xpaths.settingsWindow.groupSubmissionSettingsButton);
   session.click(xpaths.settingsWindow.groupSubmissionSettingsButton);
 }
 
@@ -83,7 +86,8 @@ function setGroupSubmissionToIndividual(session) {
   //   dropdown.dispatchEvent(new Event('change')); // Trigger change event
   // `;
   // session.executeScript(script);
-  session.click(groupSubmission.yes)
+  session.moveToElement(xpaths.settingsWindow.groupSubmissionEnabledCheckbox);
+  session.click(groupSubmission.no)
 }
 
 function saveSettings(session) {
