@@ -1,29 +1,3 @@
-// function composeQuery(session, data) {
-//   session.writeText(xpaths.searchWindow.searchInput, data.text)
-// }
-
-// function startSearch(session) {
-//   with(session) {
-//     click(xpaths.searchWindow.searchButton)
-//   }
-// }
-
-// function feelLucky(session) {
-//   with(session) {
-//     click(xpaths.searchWindow.feelingLuckyButton)
-//   }
-// }
-
-function login(session, data) {
-  sync({ request: Event('start(login)', {'session':{'name':session.name},'data':data})})
-  with(session) {
-    writeText(xpaths.loginWindow.usernameInput, data.username)
-    writeText(xpaths.loginWindow.passwordInput, data.password)
-    click(xpaths.loginWindow.loginButton)
-  }
-  sync({ request: Event('end(login)', {'session':{'name':session.name},'data':data})})
-}
-
 function enterUsername(session, data) {
   session.writeText(xpaths.loginWindow.usernameInput, data.username);
 }
@@ -79,13 +53,6 @@ function clickGroupSubmissionSettings(session) {
 }
 
 function setGroupSubmissionToIndividual(session) {
-  // session.selectDropdown(xpaths.settingsWindow.groupSubmissionEnabledCheckbox, "0");
-  // const script = `
-  //   const dropdown = document.evaluate('${xpaths.settingsWindow.groupSubmissionEnabledCheckbox}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-  //   dropdown.value = 'No'; // Set the value to 'No'
-  //   dropdown.dispatchEvent(new Event('change')); // Trigger change event
-  // `;
-  // session.executeScript(script);
   session.moveToElement(xpaths.settingsWindow.groupSubmissionEnabledCheckbox);
   session.click(groupSubmission.no)
 }

@@ -3,16 +3,24 @@
 /**
  * List of events "of interest" that we want test suites to cover.
  */
+
 const GOALS = [
-    any(/Howdy/),
-    any(/Mars/),
-    Ctrl.markEvent("Classic!")
+    any(/studentOpenCourse/),
+    any(/studentOpenAssignment/),
+    any(/studentClickAddSubmission/),
+    any(/studentEnterSubmissionText/),
+    any(/teacherSaveSettings/),
+    Ctrl.markEvent("studentSubmitAssignmentBeforeTeacherChangesSettings")
 ];
 
 const makeGoals = function(){
     return [ [ any(/Howdy/), any(/Venus/) ],
-             [ any(/Mars/) ],
-             [ Ctrl.markEvent("Classic!") ] ];
+             [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/studentClickAddSubmission/), any(/studentEnterSubmissionText/), any(/teacherSaveSettings/) ],
+             [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/studentClickAddSubmission/), any(/teacherSaveSettings/) ],
+             [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/teacherSaveSettings/) ],
+             [ any(/studentOpenCourse/), any(/teacherSaveSettings/) ],
+             [ any(/teacherSaveSettings/) ],
+             [ Ctrl.markEvent("studentSubmitAssignmentBeforeTeacherChangesSettings") ] ];
 }
 
 /**
