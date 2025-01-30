@@ -9,9 +9,10 @@ public class StepDefinitions {
 
     private static List<MoodleChangeSubmissionType> allOpenCarts;
     private static MoodleChangeSubmissionType moodleUser;
-   // private static List<MoodleChangeSubmissionType> allopenCarts;
+    private static GroupSubmission moodleStudent;
+    // private static List<MoodleChangeSubmissionType> allopenCarts;
     private String webDriver = "webdriver.chrome.driver";
-    private String path = "C:\\Users\\Daniel\\Documents\\University\\QA\\2025-mbt-ag\\Selenium\\chromedriver.exe";
+    private String path = "C:\\Users\\Gigabyte\\University\\Year4\\QA\\Final Project\\2025-mbt-ag\\Selenium\\chromedriver.exe";
 
     public void MoodleInitUser() {
         System.out.println("--------------- INITIALIZING MOODLE TEST - OPENING WEBPAGE ---------------");
@@ -21,6 +22,12 @@ public class StepDefinitions {
         moodleUser = new MoodleChangeSubmissionType();
         //allopenCarts.add(moodleUser);
         moodleUser.initSessionAsUser(webDriver, path);
+    }
+
+    public void MoodleInitStudent(){
+        System.out.println("--------------- INITIALIZING MOODLE TEST - OPENING WEBPAGE ---------------");
+        moodleStudent = new GroupSubmission();
+        moodleStudent.initSessionAsUser(webDriver, path);
     }
 
     @Given("I am logged in as a teacher")
@@ -63,4 +70,63 @@ public class StepDefinitions {
         moodleUser.goToCreateAssignment();
         moodleUser.enterNewAssignmentInfo(assignmentName);
     }
+
+    // -------------------------------------------------------
+
+    @Given("I am logged in as a student")
+   public void iAmLoggedInAsAStudent() {
+      this.MoodleInitStudent();
+   }
+
+   @When("I am logged in as a student with {string} and {string}")
+   public void iAmLoggedInAsAStudentWithAnd(String username, String password) {
+       moodleStudent.goToLogin();
+       moodleStudent.enterLoginInfo(username, password);
+   }
+
+//   @And("I navigate to the assignment {string}")
+//   public void iNavigateToTheCourse(String assignmentName) {
+//        moodleStudent.goToAssignment(assignmentName);
+//    }
+
+   @And("I navigate to the assignment {string}")
+   public void iNavigateToTheAssignment(String assignmentName) {
+      moodleStudent.goToAssignment(assignmentName);
+   }
+
+   @And("I click Add submission")
+   public void iClickAddSubmission(){
+        moodleStudent.addSubmission();
+   }
+
+   @And("I write {string} as the answer")
+   public void writeText(String text) {
+      moodleStudent.writeText("hello");
+   }
+
+   @And("I click the submit button")
+   public void iClickTheSubmitButton() {
+      moodleStudent.submitAssignment();
+   }
+
+   @Then("the system should confirm the submission was successful")
+   public void theSystemShouldConfirmTheSubmissionWasSuccessful() {
+      moodleStudent.confirmSubmissionSuccess();
+   }
+
+//   @And("the submission should be visible for all group members of {string}")
+//   public void theSubmissionShouldBeVisibleForAllGroupMembers(String groupName) {
+//      moodleStudent.confirmGroupSubmissionVisibility(groupName);
+//   }
+
+//    @Then("the group submission option should no longer be available")
+//    public void theGroupSubmissionOptionShouldNoLongerBeAvailable() {
+//       moodleUser.confirmGroupSubmissionUnavailable();
+//    }
+
+//    @Then("the system should display an error or message indicating individual submission is required")
+//    public void theSystemShouldDisplayAnErrorOrMessageIndicatingIndividualSubmissionIsRequired() {
+//       moodleUser.confirmIndividualSubmissionMessage();
+//    }
+
 }

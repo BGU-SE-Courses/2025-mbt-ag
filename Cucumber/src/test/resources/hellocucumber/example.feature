@@ -27,3 +27,4 @@ Feature: Change assignment submission type
 #    When I select "Individual submission" in the submission type dropdown
 #    And the backend service fails
 #    Then I should see an error message stating "Update failed"
+
