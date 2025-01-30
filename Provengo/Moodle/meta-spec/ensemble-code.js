@@ -4,6 +4,7 @@
  * List of events "of interest" that we want test suites to cover.
  */
 
+
 const GOALS = [
     any(/studentOpenCourse/),
     any(/studentOpenAssignment/),
@@ -13,14 +14,36 @@ const GOALS = [
     Ctrl.markEvent("studentSubmitAssignmentBeforeTeacherChangesSettings")
 ];
 
-const makeGoals = function(){
-    return [ [ any(/Howdy/), any(/Venus/) ],
-             [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/studentClickAddSubmission/), any(/studentEnterSubmissionText/), any(/teacherSaveSettings/) ],
+// Domain specific:
+const makeGoals_domainSpecific = function(){
+    return [ [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/studentClickAddSubmission/), any(/studentEnterSubmissionText/), any(/teacherSaveSettings/) ],
              [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/studentClickAddSubmission/), any(/teacherSaveSettings/) ],
              [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/teacherSaveSettings/) ],
              [ any(/studentOpenCourse/), any(/teacherSaveSettings/) ],
              [ any(/teacherSaveSettings/) ],
              [ Ctrl.markEvent("studentSubmitAssignmentBeforeTeacherChangesSettings") ] ];
+}
+
+// Two way:
+function isLegalPair( event1, event2 ) {
+    return !((event1.match(/studentOpenAssignment/) && event2.match(/studentOpenCourse/)) ||
+                (event1.match(/studentClickAddSubmission/) && event2.match(/studentOpenAssignment/)) ||
+                (event1.match(/studentEnterSubmissionText/) && event2.match(/studentClickAddSubmission/)) ||
+                event1.match(/studentEnterSubmissionText/) && event2.match(/studentOpenAssignment/) ||
+                event1.match(/studentEnterSubmissionText/) && event2.match(/studentOpenCourse/));
+}
+
+const makeGoals = function(){
+    let events = [ any(/studentOpenCourse/), any(/studentOpenAssignment/), any(/studentClickAddSubmission/), any(/studentEnterSubmissionText/), any(/teacherSaveSettings/) ];
+    let pairs = [];
+    for (let i=0; i<events.length; i++) {
+        for (let j=i+1; j<events.length; j++) {
+            if (isLegalPair(events[i], events[j])) {
+                pairs.push([events[i], events[j]]);
+            }
+        }
+    }
+    return pairs;
 }
 
 /**
